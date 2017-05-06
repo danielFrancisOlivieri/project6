@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.parseXML demo</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body >
+ 
+<p id="someElement"></p>
+<p id="anotherElement"></p>
+ 
+<script>
+var xmlhttp;
+// Function to setup the XMLRequest object depending on Browser
+ //function setup() {
+  if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+    }
+  else
+    {// code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+ var shakespearePath="/var/www/html/class/softdev/XMLFiles/ShakespeareXML";
+ console.log("this is the path: " + shakespearePath);
+
+
+/*
+// shakespeareLookup - Using the data for the book, chapter, verse, and number of verses found in the input elements
+// load the appropriate book XML, and get the requested books.
+function getPlay () {
+ // var b=document.getElementById('PERSONAE').value;
+  var c=document.getElementById('TITLE').value;
+  var v=parseInt(document.getElementById('PERSONA').value);
+  //var n=parseInt(document.getElementById('numVerse').value);
+
+  var XMLBook = shakespearePath +  "lear.xml";
+  console.log("Got path"+XMLBook);
+  xmlhttp.open("GET",XMLBook,true);
+  xmlhttp.onreadystatechange=function() {
+	if (xmlhttp.readyState == 4) {
+	     var xmlDoc=xmlhttp.responseXML;
+	     //displayVerses(xmlDoc,c,v);
+	}
+  }  
+  xmlhttp.send(null);
+}
+
+
+// displayVerses - given an XML document, a book, chapter, verse and number of verses, display them
+function displayVerses(xmlDoc,c,v){
+  document.write("<h1><font color=blue>Kenyon shakespeare XML Demo Program</font></h1><br>");
+  var i = 0;
+  try {
+    for (i = 0; i < n;i++) {
+      vtext = getVerse(xmlDoc,c,v+i);
+	  document.write("<p>"+vtext+"</p>");
+    }
+  }
+  catch(error) {
+    if (error == "no chapter") {
+      document.write("<b><i>No such chapter "+c+"</i></b>");
+    }      
+    if (error == "no verse") {
+	  if (i == 0)
+        document.write("<b><i>No such verse "+(v+i)+"</i></b>");
+    }
+  }
+      
+}
+*/
+var   shakespearePath="/var/www/html/class/softdev/XMLFiles/ShakespeareXML";
+ var XMLBook = shakespearePath +  "lear.xml";
+  console.log("Got path"+XMLBook);
+  xmlhttp.open("GET",XMLBook,true);
+  xmlhttp.onreadystatechange=function() {
+	if (xmlhttp.readyState == 4) {
+	     var xmlDoc=xmlhttp.responseXML;
+	     //displayVerses(xmlDoc,c,v);
+		 console.log("has loaded");
+		 
+		 
+  var parsedXML = $.parseXML( xmlDoc); //"<rss version='2.0'><channel><PERSONA>Cordelia</PERSONA></channel></rss>" ),
+  $xml = $( parsedXML );
+  $title = $xml.find( "TITLE" );
+ console.log("title: " + $title.text());
+// Append "RSS Title" to #someElement
+$( "#someElement" ).append( "I stumbled when I saw?"); //$title.text() );
+ 
+// Change the title to "XML Title"
+$title.text( "XML Title" );
+ 
+// Append "XML Title" to #anotherElement
+$( "#anotherElement" ).append( $title.text() );
+		 
+	}
+  }
+  xmlhttp.send(null);
+
+ console.log("not loaded????************");
+</script>
+ 
+</body>
+</html>
+
